@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MspHead {
-
     private String result_code;
     private String result_msg;
 }

@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="news">
-
+    <!-- 뉴스 저장 -->
+    <insert id="set_admin_position" parameterType="NewsVo">
+        INSERT INTO post(post_title, post_content, post_writer, post_press, post_regdate)
+        VALUES (#{post_title}, #{post_content}, #{post_writer}, #{post_press}, #{post_regdate})
+    </insert>
+    
+    <!-- 뉴스 죄회 -->
 </mapper>

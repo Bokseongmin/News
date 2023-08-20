@@ -10,7 +10,6 @@ import lombok.ToString;
 @Getter
 @Setter
 public class MspResult {
-
     private MspHead head;
     private Object body;
 }

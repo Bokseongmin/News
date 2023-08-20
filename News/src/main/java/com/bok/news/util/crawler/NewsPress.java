@@ -1,19 +1,40 @@
 package com.bok.news.util.crawler;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum NewsPress {
-    chosun("https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml"),
-    kyungHyang("http://www.khan.co.kr/rss/rssdata/total_news.xml"),
-    yonHap("https://www.yonhapnewstv.co.kr/browse/feed/"),
-    jTbc("https://fs.jtbc.co.kr/RSS/newsflash.xml"),
-    dongA("https://rss.donga.com/total.xml");
+    chosun("조선일보", "https://www.chosun.com/arc/outboundfeeds/rss/?outputType=xml"),
+    kyungHyang("경향신문", "http://www.khan.co.kr/rss/rssdata/total_news.xml"),
+    yonHap("연합뉴스", "https://www.yonhapnewstv.co.kr/browse/feed/"),
+    jTbc("JTBC", "https://fs.jtbc.co.kr/RSS/newsflash.xml"),
+    dongA("동아일보", "https://rss.donga.com/total.xml");
 
-    private final String rssUrl;
+    private static final Map<String, String> newsMap = new HashMap<>();
 
-    NewsPress(String rssUrl) {
-        this.rssUrl = rssUrl;
+    static {
+        for (NewsPress newsPress : NewsPress.values()) {
+            newsMap.put(newsPress.getUrl(), newsPress.getPress());
+        }
     }
 
-    public String getRssUrl() {
-        return rssUrl;
+    private final String url;
+    private final String press;
+
+    NewsPress(String press, String url) {
+        this.press = press;
+        this.url = url;
+    }
+
+    public String getPress() {
+        return press;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public static String getPressByUrl(String url) {
+        return newsMap.get(url);
     }
 }

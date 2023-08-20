@@ -7,6 +7,6 @@
         <setting name="defaultExecutorType" value="REUSE" />
     </settings>
     <typeAliases>
-        <typeAlias type="com.bok.news.vo.NewsVo" alias="NewsVo" />
+        <typeAlias type="com.bok.news.dto.NewsDto" alias="NewsVo" />
     </typeAliases>
 </configuration>

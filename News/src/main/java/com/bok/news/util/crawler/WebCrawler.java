@@ -1,5 +1,6 @@
 package com.bok.news.util.crawler;
 
+import com.bok.news.dto.NewsDto;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -13,24 +14,56 @@ import java.util.*;
 @Slf4j
 public class WebCrawler {
 
-    public Map<String, Integer> news(String press) throws Exception {
+    public Map<String, Integer> news(String pressUrl) throws Exception {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
         Date currentDate = new Date();
         String date = dateFormat.format(currentDate);
 
-        String address = press;
+        String address = pressUrl;
+        String press = NewsPress.getPressByUrl(pressUrl);
+        String writer = null;
         Document data = Jsoup.connect(address).get();
         Elements items = data.select("item");
         List<String> newsList = new ArrayList<>();
 
-        for (Element item : items) {
-            String link = item.select("link").text();
-            Document news = Jsoup.connect(link).get();
-            String content = news.select("div.article_content").text();
-            newsList.add(content);
-        }
+        List<NewsDto> newsPost = new ArrayList<>();
 
+        for (Element item : items) {
+            NewsDto newsDto = new NewsDto();
+            String url = item.select("link").text();
+            String title = item.select("title").text();
+            String regdate = item.select("pubDate").text();
+            Document news = Jsoup.connect(url).get();
+            String content = null;
+
+            if(Objects.equals(press, NewsPress.chosun.getPress())) {
+                content = item.select("description").text();
+                writer = item.select("dc|creator").text();
+            } else if (Objects.equals(press, NewsPress.kyungHyang.getPress())) {
+                content = news.select("p.content_text.text-l").text();
+                writer = item.select("author").text();
+            } else if (Objects.equals(press, NewsPress.yonHap.getPress())) {
+                content = news.select("div#articleBody.detail").text();
+                writer = null;
+            } else if (Objects.equals(press, NewsPress.jTbc.getPress())) {
+                content = news.select("div.article_content").text();
+                writer = news.select("dd.name").text();
+            } else if (Objects.equals(press, NewsPress.dongA.getPress())) {
+                content = news.select("div#article_txt.article_txt").text();
+                writer = news.select("span.name").text();;
+            }
+            newsDto.setPost_title(title);
+            newsDto.setPost_content(content);
+            newsDto.setPost_writer(writer);
+            newsDto.setPost_url(url);
+            newsDto.setPost_press(press);
+//            newsDto.setPost_regdate(newsDto.stringToLocalDateTime(regdate.replaceAll("\\.","-")));
+
+            newsList.add(content);
+            newsPost.add(newsDto);
+        }
+        System.out.println(newsPost);
         Map<String, Integer> wordCountMap = wordCnt(newsList);
         return wordCountMap;
     }
@@ -44,7 +77,7 @@ public class WebCrawler {
         String[] words = trimContent.split(" ");
 
         for (int i = 0; i < words.length; i++) {
-            words[i] = words[i].replaceAll("(은|는|이|가|을|를|과|와|라|인|이나|에|서|에서|까지|에게)$", "");
+            words[i] = words[i].replaceAll("(은|는|이|가|을|를|과|와|라|인|이나|에|서|에서|까지|에게|근데|그리고|그래서|)$", "");
             words[i] = words[i].toLowerCase();
         }
         return words;
