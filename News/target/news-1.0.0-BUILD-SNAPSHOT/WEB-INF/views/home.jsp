@@ -3,6 +3,9 @@
 <!doctype html>
 <html>
 <head>
+	<script src="https://d3js.org/d3.v6.min.js"></script>
+	<script src="https://cdn.rawgit.com/jasondavies/d3-cloud/master/build/d3.layout.cloud.js"></script>
+
 	<jsp:include page="include/head.jsp"/>
 	<title>플랫폼</title>
 </head>
@@ -139,8 +142,8 @@
 				<h1 class="h2">대시보드</h1>
 				<div class="btn-toolbar mb-2 mb-md-0">
 					<div class="btn-group me-2">
-						<button type="button" class="btn btn-sm btn-outline-secondary">제목</button>
-						<button type="button" class="btn btn-sm btn-outline-secondary">내용</button>
+						<button type="button" class="btn btn-sm btn-outline-secondary" id="titleBtn">제목</button>
+						<button type="button" class="btn btn-sm btn-outline-secondary" id="contentBtn">내용</button>
 					</div>
 <%--					<button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1">--%>
 <%--						<svg class="bi"><use xlink:href="#calendar3"/></svg>--%>
@@ -149,8 +152,9 @@
 				</div>
 			</div>
 
-			<canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
-
+			<div class="d-flex justify-content-center flex-wrap" id="wordCloud">
+				<jsp:include page="page/word-cloud.jsp"/>
+			</div>
 			<h2>최신 뉴스</h2>
 			<div class="table-responsive small">
 				<table class="table table-striped table-sm">
@@ -178,6 +182,5 @@
 	</div>
 </div>
 <script src="../../resources/bootstrap/assets/dist/js/bootstrap.bundle.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js" integrity="sha384-gdQErvCNWvHQZj6XZM0dNsAoY4v+j5P1XDpNkcM3HJG1Yx04ecqIHk7+4VBOCHOG" crossorigin="anonymous"></script><script src="../../resources/bootstrap/dashboard.js"></script></body>
+</body>
 </html>

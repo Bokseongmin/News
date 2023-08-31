@@ -13,11 +13,12 @@ public class NewsService {
 
     private final WebCrawler webCrawler = new WebCrawler();
 
-    public Map<String, Integer> test() throws Exception {
+    public Map<String, Integer> test(String type) throws Exception {
         Map<String, Integer> words = new HashMap<>();
         for(NewsPress press : NewsPress.values()) {
-            words = webCrawler.news(press.getUrl());
+            words = webCrawler.news(press.getUrl(), type);
         }
-        return words;
+        Map<String, Integer> top10 = webCrawler.getTop10(words);
+        return top10;
     }
 }

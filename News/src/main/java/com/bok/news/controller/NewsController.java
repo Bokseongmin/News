@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,10 +24,10 @@ public class NewsController {
     @Resource
     private NewsService newsService;
 
-    @GetMapping("/get")
-    public ResponseEntity<MspResult> getNews() throws Exception {
+    @GetMapping("/get/{type}")
+    public ResponseEntity<MspResult> getNews(@PathVariable("type") String type) throws Exception {
         MspResult result;
-        Map<String, Integer> test = newsService.test();
+        Map<String, Integer> test = newsService.test(type);
         JSONObject jsonObject = new JSONObject(test);
         if(test != null) {
             result = MspUtil.makeResult(MspStatus.OK, jsonObject.toString());
