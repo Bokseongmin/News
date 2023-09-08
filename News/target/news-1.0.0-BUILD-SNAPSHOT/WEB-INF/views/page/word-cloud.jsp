@@ -11,17 +11,21 @@
 </div>
 <script>
     var wordDataList = [];
-    var wordCloudUrl = "";
+    var wordCloudUrl = "/news/get/title";
+
+    getWordCloud(wordCloudUrl);
+
     $("#titleBtn").click(function() {
         wordCloudUrl = "/news/get/title";
-        console.log(wordCloudUrl);
+        getWordCloud(wordCloudUrl);
     });
 
     $("#contentBtn").click(function() {
         wordCloudUrl = "/news/get/content";
-        console.log(wordCloudUrl);
+        getWordCloud(wordCloudUrl);
     });
     function getWordCloud(url) {
+        $("#word-cloud").empty();
         $.ajax({
             type: "GET",
             url: url,
@@ -71,7 +75,8 @@
                     svg.selectAll("text")
                         .data(wordDataList)
                         .enter().append("text")
-                        .style("font-size", d => d.size*2 + "px")
+                        .style("font-size", d => d.size*10 + "px")
+                        .attr("transform", "translate(320,200)")
                         .attr("transform", function(d) {
                             return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
                         })

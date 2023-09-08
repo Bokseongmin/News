@@ -2,9 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="news">
     <!-- 뉴스 저장 -->
-    <insert id="set_admin_position" parameterType="NewsVo">
-        INSERT INTO post(post_title, post_content, post_writer, post_press, post_regdate)
-        VALUES (#{post_title}, #{post_content}, #{post_writer}, #{post_press}, #{post_regdate})
+    <insert id="insert" parameterType="NewsVo">
+        <selectKey keyProperty="count" resultType="int" order="AFTER">
+            SELECT COUNT(*) AS count FROM post WHERE post_url = #{post_url}
+        </selectKey>
+        <if test="count == 0">
+            INSERT INTO post(post_title, post_content, post_writer, post_press, post_url, post_regdate)
+            VALUES (#{post_title}, #{post_content}, #{post_writer}, #{post_press}, #{post_url}, #{post_regdate})
+        </if>
     </insert>
     
     <!-- 뉴스 죄회 -->
