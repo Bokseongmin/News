@@ -2,15 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="news">
     <!-- 뉴스 저장 -->
-    <insert id="insert" parameterType="NewsVo">
-        <selectKey keyProperty="count" resultType="int" order="AFTER">
-            SELECT COUNT(*) AS count FROM post WHERE post_url = #{post_url}
-        </selectKey>
-        <if test="count == 0">
-            INSERT INTO post(post_title, post_content, post_writer, post_press, post_url, post_regdate)
-            VALUES (#{post_title}, #{post_content}, #{post_writer}, #{post_press}, #{post_url}, #{post_regdate})
-        </if>
+    <insert id="insert" parameterType="NewsDto">
+        INSERT INTO post(post_title, post_content, post_writer, post_press, post_url, post_regdate)
+        VALUES (#{post_title}, #{post_content}, #{post_writer}, #{post_press}, #{post_url}, #{post_regdate})
     </insert>
     
-    <!-- 뉴스 죄회 -->
+    <!-- 뉴스 조회 -->
+    <select id="getNews" resultType="NewsDto">
+
+    </select>
 </mapper>

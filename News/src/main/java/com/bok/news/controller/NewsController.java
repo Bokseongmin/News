@@ -27,12 +27,12 @@ public class NewsController {
     @GetMapping("/get/{type}")
     public ResponseEntity<MspResult> getNews(@PathVariable("type") String type) throws Exception {
         MspResult result;
-        Map<String, Integer> wordCloud = newsService.getCloud(type);
-        if(wordCloud != null) {
-            result = MspUtil.makeResult(MspStatus.OK, null);
-        } else {
-            result = MspUtil.makeResult("4444", "데이터가 없습니다.", null);
-        }
-        return new ResponseEntity<>(result, HttpStatus.OK);
+//        Map<String, Integer> wordCloud = newsService.getCloud(type);
+//        if(wordCloud != null) {
+//            result = MspUtil.makeResult(MspStatus.OK, null);
+//        } else {
+//            result = MspUtil.makeResult("4444", "데이터가 없습니다.", null);
+//        }
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 }

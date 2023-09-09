@@ -62,7 +62,6 @@ public class WebCrawler {
 
             newsPost.add(newsDto);
         }
-        System.out.println(newsPost);
         return newsPost;
     }
 

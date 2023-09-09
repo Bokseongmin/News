@@ -7,8 +7,8 @@ import java.util.List;
 
 @Repository("NewsDao")
 public class NewsDao extends CommonDao {
-    public int insert(List<NewsDto> newsDaoList) {
-        return getSqlSession().insert("news.insert", newsDaoList);
+    public int insert(NewsDto newsDto) {
+        return getSqlSession().insert("news.insert", newsDto);
     }
 
     public List<NewsDto> getNews() {

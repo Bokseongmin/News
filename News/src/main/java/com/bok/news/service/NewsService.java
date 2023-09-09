@@ -25,11 +25,15 @@ public class NewsService {
         try {
             for(NewsPress press : NewsPress.values()) {
                 newsDtoList = webCrawler.news(press.getUrl());
-                if(newsDao.insert(newsDtoList) > 0) {
-                    affectRow = 1;
-                } else {
-                    log.error(press + " insert error");
-                    affectRow = 0;
+                for (NewsDto dto : newsDtoList) {
+                    // MyBatis를 통해 데이터베이스에 저장하기 전에 개별적으로 저장
+                    int result = newsDao.insert(dto);
+                    if (result > 0) {
+                        affectRow += result;
+                    } else {
+                        log.error(press + " insert error");
+                        // 실패한 경우 처리할 내용 추가
+                    }
                 }
             }
         } catch (Exception e) {

@@ -39,14 +39,6 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) throws Exception {
-		MspResult mspResult;
-		int affectRow = newsService.insertNews();
-		if(affectRow > 0) {
-			mspResult = MspUtil.makeResult(MspStatus.OK, null);
-		} else {
-			mspResult = MspUtil.makeResult("4444", "데이터를 저장하던 중 오류가 발생했습니다.", null);
-		}
-		log.info(mspResult.toString());
 		return "home";
 	}
 
